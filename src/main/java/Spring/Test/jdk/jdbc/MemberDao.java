@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 //import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.util.Map;
 
@@ -18,15 +19,9 @@ public class MemberDao {
     SimpleJdbcInsert simpleJdbcInsert;
     SimpleJdbcCall simpleJdbcCall;
 
-    /*
-    public void setDataSource(DataSource dataSource){
-        this.simpleJdbcTemplate = new SimpleJdbcTemplate(dataSource);
-    }
-     */
-
     public void setDataSource(DataSource dataSource) {
         //this.simpleJdbcTemplate = new SimpleJdbcTemplate(dataSource);
-        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 
         /* SimpleJdbcInsert 생성*/
         /* Thread Safe 하다 */
