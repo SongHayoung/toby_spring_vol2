@@ -37,9 +37,9 @@ public class iBatisTest {
         /* iBatis도 사용되지 않는다 MyBatis를 공부하자.. */
         private SqlMapClientTemplate sqlMapClientTemplate;
 
-        public void setSqlMapClient(SqlMapClient sqlMapClient) {
+       /* public void setSqlMapClient(SqlMapClient sqlMapClient) {
             sqlMapClientTemplate = new SqlMapClientTemplate(sqlMapClient);
-        }
+        }*/
 
         public void insert(Member m) { sqlMapClientTemplate.insert("insertMember", m); }
         public void deleteAll() { sqlMapClientTemplate.delete("deleteMemberAll"); }

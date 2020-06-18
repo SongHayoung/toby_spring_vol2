@@ -1,19 +1,20 @@
 package Spring.Test.jdk.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.*;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+//import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 import javax.sql.DataSource;
 import java.util.Map;
 
 public class MemberDao {
     @Autowired DataSource dataSource;
-    SimpleJdbcTemplate simpleJdbcTemplate; //Spring 4.x 부터 삭제 NamedParameterJdbcTemplate 혹은 JdbcTemplate 사용
+    //SimpleJdbcTemplate simpleJdbcTemplate; //Spring 4.x 부터 삭제 NamedParameterJdbcTemplate 혹은 JdbcTemplate 사용
+    JdbcTemplate jdbcTemplate;
+    NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     SimpleJdbcInsert simpleJdbcInsert;
     SimpleJdbcCall simpleJdbcCall;
 
@@ -24,61 +25,68 @@ public class MemberDao {
      */
 
     public void setDataSource(DataSource dataSource) {
-        this.simpleJdbcTemplate = new SimpleJdbcTemplate(dataSource);
+        //this.simpleJdbcTemplate = new SimpleJdbcTemplate(dataSource);
+        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 
         /* SimpleJdbcInsert 생성*/
         /* Thread Safe 하다 */
-        simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("member");
+        this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("member");
 
         /* 저장 프로시저나 펑션을 이용할 때 사용한다 */
-        simpleJdbcCall = new SimpleJdbcCall(dataSource).withFunctionName("find_name");
+        this.simpleJdbcCall = new SimpleJdbcCall(dataSource).withFunctionName("find_name");
     }
 
     /* 애노테이션을 이용한 주입 */
     @Autowired
     public void init(DataSource dataSource){
-        this.simpleJdbcTemplate = new SimpleJdbcTemplate(dataSource);
+        //this.simpleJdbcTemplate = new SimpleJdbcTemplate(dataSource);
 
         /* SimpleJdbcInsert 생성*/
         /* Thread Safe 하다 */
-        simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("member");
+        this.simpleJdbcInsert = new SimpleJdbcInsert(dataSource).withTableName("member");
 
         /* 저장 프로시저나 펑션을 이용할 때 사용한다 */
-        simpleJdbcCall = new SimpleJdbcCall(dataSource).withFunctionName("find_name");
+        this.simpleJdbcCall = new SimpleJdbcCall(dataSource).withFunctionName("find_name");
+
+        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     /* 파라미터를 이용한 삽입 */
+    /*
     public void addMember(int id, String name, double point){
         simpleJdbcTemplate.update("INSERT INTO MEMBER(ID, NAME, POINT) VALUES(?, ?, ?)",
                 id,name,point);
     }
+    */
 
     /* 이름 치환자를 이용한 삽입 */
     public void addMember(Map<String, Object> map){
-        simpleJdbcTemplate.update("INSERT INTO MEMBER(ID, NAME, POINT) VALUES(:id, :name, :point)",
+        namedParameterJdbcTemplate.update("INSERT INTO MEMBER(ID, NAME, POINT) VALUES(:id, :name, :point)",
                 map);
     }
 
     /* BeanPropertySqlParameterSource를 사용한 삽입 */
     /* BeanPropertySqlParameterSource를 사용한 바인딩 파라미터 사용 */
     public void addMember(Member member){
-        simpleJdbcTemplate.update("INSERT INTO MEMBER(ID, NAME, POINT) VALUES(:id, :name, :point)",
+        namedParameterJdbcTemplate.update("INSERT INTO MEMBER(ID, NAME, POINT) VALUES(:id, :name, :point)",
                 new BeanPropertySqlParameterSource(member));
     }
 
     /* MapSqlParameterSource를 사용한 삽입 */
     /* MqpSourceParameterSource를 사용한 바인딩 파라미터 사용 */
     public void addMember(){
-        simpleJdbcTemplate.update("INSERT INTO MEMBER(ID, NAME, POINT) VALUES(:id, :name, :point)",
+        namedParameterJdbcTemplate.update("INSERT INTO MEMBER(ID, NAME, POINT) VALUES(:id, :name, :point)",
                 new MapSqlParameterSource()
         .addValue("id",4).addValue("name", "Spring").addValue("point", 3.5));
     }
 
     /* 배치 메소드를 통한 삽입 */
     public void batchaddMember(){
-        simpleJdbcTemplate.update("INSERT INTO MEMBER(ID, NAME, POINT) VALUES(:id, :name, :point)",
+        namedParameterJdbcTemplate.batchUpdate("INSERT INTO MEMBER(ID, NAME, POINT) VALUES(:id, :name, :point)",
                 new SqlParameterSource[] {
-        new MapSqlParameterSource().addValue("id",5).addValue("name", "Spring"),
+        new MapSqlParameterSource().addValue("id",5).addValue("name", "Spring").addValue("point",3.5),
         new BeanPropertySqlParameterSource(new Member(6, "Spring", 3.5))
     });
     }
@@ -94,6 +102,6 @@ public class MemberDao {
     }
 
     public void deleteAll(){
-        simpleJdbcTemplate.update("DELETE FROM MEMBER");
+        jdbcTemplate.update("DELETE FROM MEMBER");
     }
 }
