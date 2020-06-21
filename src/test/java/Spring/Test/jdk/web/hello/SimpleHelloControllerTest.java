@@ -1,4 +1,4 @@
-package Spring.Test.jdk.web.Hello;
+package Spring.Test.jdk.web.hello;
 
 import Spring.Test.jdk.web.AbstractDispatcherServletTest;
 import org.junit.Test;

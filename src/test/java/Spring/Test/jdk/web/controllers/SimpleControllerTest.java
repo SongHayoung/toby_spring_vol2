@@ -1,4 +1,4 @@
-package Spring.Test.jdk.web.Hello.controllers;
+package Spring.Test.jdk.web.controllers;
 
 import Spring.Test.jdk.web.AbstractDispatcherServletTest;
 
@@ -14,11 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Test;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.Controller;
 import org.springframework.web.servlet.ModelAndView;
-
 
 public class SimpleControllerTest extends AbstractDispatcherServletTest {
     @Test
@@ -48,14 +46,14 @@ public class SimpleControllerTest extends AbstractDispatcherServletTest {
         assertThat(model.get("message").toString(), is("Hello Spring"));
     }
 
-    @Component("/hello")
-    //@RequestMapping("/hello") //왜 RequestMapping이 안되냐..
+    @org.springframework.stereotype.Controller
     static class HelloController extends SimpleController {
         public HelloController() {
             this.setRequiredParams(new String[] {"name"});
             this.setViewName("/WEB-INF/view/hello.jsp");
         }
 
+        @RequestMapping("/hello")
         public void control(Map<String, String> params, Map<String, Object> model) throws Exception {
             model.put("message", "Hello " + params.get("name"));
         }

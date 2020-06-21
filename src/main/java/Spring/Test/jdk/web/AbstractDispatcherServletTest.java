@@ -14,7 +14,7 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public abstract class AbstractDispatcherServletTest implements AfterRunService{
@@ -55,7 +55,7 @@ public abstract class AbstractDispatcherServletTest implements AfterRunService{
     public AbstractDispatcherServletTest initRequest(String requestUri, String method){
         this.request = new MockHttpServletRequest(method, requestUri);
         this.response = new MockHttpServletResponse();
-        if(this.servletPath!=null) this.setServletPath(this.servletPath);
+        if(this.servletPath != null) this.setServletPath(this.servletPath);
         return this;
     }
 
@@ -92,6 +92,7 @@ public abstract class AbstractDispatcherServletTest implements AfterRunService{
         if(this.dispatcherServlet == null) buildDispatcherServlet();
         if(this.request == null)
             throw new IllegalStateException("request가 준비되지 않았습니다");
+
         this.dispatcherServlet.service(this.request, this.response);
         return this;
     }
@@ -100,6 +101,10 @@ public abstract class AbstractDispatcherServletTest implements AfterRunService{
         initRequest(requestUri);
         runService();
         return this;
+    }
+
+    public String getServletPath(){
+        return this.servletPath;
     }
 
     public WebApplicationContext getContext() {

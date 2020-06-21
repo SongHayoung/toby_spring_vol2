@@ -18,15 +18,15 @@
 		</property>
 	</bean>
 	
-	<bean name="c1" class="Spring.Test.jdk.web.Hello.controllers.HandlerMappingTest$Controller1">
+	<bean name="c1" class="Spring.Test.jdk.web.hello.controllers.HandlerMappingTest$Controller1">
 		<property name="url" value="c1" />
 	</bean>
 	
-	<bean name="c2" class="Spring.Test.jdk.web.Hello.controllers.HandlerMappingTest$Controller1">
+	<bean name="c2" class="Spring.Test.jdk.web.hello.controllers.HandlerMappingTest$Controller1">
 		<property name="url" value="c2" />
 	</bean>
 	
-	<bean name="c3" class="Spring.Test.jdk.web.Hello.controllers.HandlerMappingTest$Controller1">
+	<bean name="c3" class="Spring.Test.jdk.web.hello.controllers.HandlerMappingTest$Controller1">
 		<property name="url" value="c3" />
 	</bean>
 </beans>

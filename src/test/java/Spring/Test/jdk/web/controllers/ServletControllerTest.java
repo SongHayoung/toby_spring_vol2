@@ -1,9 +1,8 @@
-package Spring.Test.jdk.web.Hello.controllers;
+package Spring.Test.jdk.web.controllers;
 
 import Spring.Test.jdk.web.AbstractDispatcherServletTest;
 import org.junit.Test;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.handler.SimpleServletHandlerAdapter;
 
 import javax.servlet.ServletException;

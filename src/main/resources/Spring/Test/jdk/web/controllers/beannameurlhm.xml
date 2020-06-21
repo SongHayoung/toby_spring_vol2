@@ -3,23 +3,23 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<bean name="/hello" class="Spring.Test.jdk.web.Hello.controllers.HandlerMappingTest$Controller1">
+	<bean name="/hello" class="Spring.Test.jdk.web.hello.controllers.HandlerMappingTest$Controller1">
 		<property name="url" value="/hello" />
 	</bean>
 	
-	<bean name="/hello/world" class="Spring.Test.jdk.web.Hello.controllers.HandlerMappingTest$Controller1">
+	<bean name="/hello/world" class="Spring.Test.jdk.web.hello.controllers.HandlerMappingTest$Controller1">
 		<property name="url" value="/hello/world" />
 	</bean>
 	
-	<bean name="/multi/*" class="Spring.Test.jdk.web.Hello.controllers.HandlerMappingTest$Controller1">
+	<bean name="/multi/*" class="Spring.Test.jdk.web.hello.controllers.HandlerMappingTest$Controller1">
 		<property name="url" value="/multi/*" />
 	</bean>
 	
-	<bean name="/root/**/sub" class="Spring.Test.jdk.web.Hello.controllers.HandlerMappingTest$Controller1">
+	<bean name="/root/**/sub" class="Spring.Test.jdk.web.hello.controllers.HandlerMappingTest$Controller1">
 		<property name="url" value="/root/**/sub" />
 	</bean>
 	
-	<bean name="/s*" class="Spring.Test.jdk.web.Hello.controllers.HandlerMappingTest$Controller1">
+	<bean name="/s*" class="Spring.Test.jdk.web.hello.controllers.HandlerMappingTest$Controller1">
 		<property name="url" value="/s*" />
 	</bean>
 	

@@ -5,5 +5,14 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-    <bean id="helloSpring" class="Spring.Test.jdk.web.hello.HelloSpring" />
+    <context:annotation-config />
+
+    <bean id="marshaller" class="org.springframework.oxm.castor.CastorMarshaller" />
+
+    <bean id="helloMarshallingView" class="org.springframework.web.servlet.view.xml.MarshallingView">
+        <property name="marshaller" ref="marshaller" />
+        <property name="modelKey" value="info" />
+    </bean>
+
+    <bean id="helloController" class="Spring.Test.jdk.web.view.MarshallingViewTest$HelloController" />
 </beans>

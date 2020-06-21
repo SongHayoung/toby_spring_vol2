@@ -1,4 +1,4 @@
-package Spring.Test.jdk.web.Hello.controllers;
+package Spring.Test.jdk.web.controllers;
 
 import java.io.IOException;
 
